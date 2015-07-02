@@ -1,0 +1,8 @@
+This project is based on a handmadehero.org project.
+
+Day 001: display a message box
+  https://forums.handmadehero.org/jace/videos/win32-platform/day001.html
+
+Day 002: opening a window
+  https://forums.handmadehero.org/jace/videos/win32-platform/day002.html
+  - window content is alternating between white and black, when sizing it
