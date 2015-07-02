@@ -10,4 +10,5 @@ Day 002: opening a window
 Day 003: allocating a back buffer
   https://forums.handmadehero.org/jace/videos/win32-platform/day003.html
   - close the app when close button is clicked
-  todo: manipulate bitmap directly via MemoryImageSource()  
+  - handle event: window size changed
+  24:28 todo: manipulate bitmap directly via MemoryImageSource()  

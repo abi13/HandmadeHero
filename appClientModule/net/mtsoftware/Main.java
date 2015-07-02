@@ -2,12 +2,15 @@ package net.mtsoftware;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 
 public class Main {
+	
 	public static void main(String[] args) {
 		
 		// create the main frame window
@@ -26,8 +29,12 @@ public class Main {
 		frame.setSize(300, 100);
 		
 		// set custom content pane
-		frame.setContentPane(new MyComponent());
-		
+		MainContentPane mainContentPane = new MainContentPane();
+		frame.setContentPane(mainContentPane);
+
+		// added handling of events when main content pane is resized / moved/ shown/ hidden
+		frame.addComponentListener(mainContentPane);
+
 		// show it
 		frame.setVisible(true);
 	}
@@ -39,7 +46,7 @@ public class Main {
 		super();
 	}
 	
-    static class MyComponent extends JComponent {
+    static class MainContentPane extends JComponent implements ComponentListener {
     	
     	Color color = Color.white;
     	public void paint(Graphics g) {
@@ -55,5 +62,22 @@ public class Main {
     		g.setColor(color);
     		g.fillRect(0, 0, getWidth(), getHeight());
 	    }
+		
+    	@Override
+		public void componentHidden(ComponentEvent e) {
+		}
+
+    	@Override
+		public void componentMoved(ComponentEvent e) {
+		}
+		
+		@Override
+		public void componentResized(ComponentEvent e) {
+			System.out.println("resized width="+getWidth()+", height="+getHeight());
+		}
+
+		@Override
+		public void componentShown(ComponentEvent e) {
+		}
 	}
 }
