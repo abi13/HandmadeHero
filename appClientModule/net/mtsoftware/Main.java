@@ -13,6 +13,12 @@ public class Main {
 		// create the main frame window
 		JFrame frame = new JFrame("Handmade Hero");
 		
+		// exit the application when Close button is clicked
+		// Note: the default is JFrame.HIDE_ON_CLOSE — Hide the frame, but keep 
+		// the application running. This can be frustrating, because it looks like 
+		// you have "killed" the program, but it keeps on running, and you see no frame.
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		// center the main frame window
 		frame.setLocationRelativeTo(null);
 
@@ -35,8 +41,7 @@ public class Main {
 	
     static class MyComponent extends JComponent {
     	
-    	static Color color = Color.white;
-    	
+    	Color color = Color.white;
     	public void paint(Graphics g) {
     		
     		// alternate between blackness and whiteness
