@@ -2,9 +2,14 @@ package net.mtsoftware;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.image.MemoryImageSource;
+import java.io.File;
+import java.util.Arrays;
 
+import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
@@ -14,7 +19,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		// create the main frame window
-		JFrame frame = new JFrame("Handmade Hero");
+		JFrame frame = new JFrame("Handmade Hero Day 004");
 		
 		// exit the application when Close button is clicked
 		// Note: the default is JFrame.HIDE_ON_CLOSE — Hide the frame, but keep 
@@ -48,19 +53,28 @@ public class Main {
 	
     static class MainContentPane extends JComponent implements ComponentListener {
     	
-    	Color color = Color.white;
-    	public void paint(Graphics g) {
+		private static final long serialVersionUID = 1L;
+
+		Color color = Color.blue;
+    	int[] bitmapMemory = null;
+    	MemoryImageSource bitmap = null;
+    	Image image;
+    	
+    	void resizeBitmap(int width, int height) {
     		
-    		// alternate between blackness and whiteness
-    		if( color==Color.white ) {
-    			color = Color.black;
-    		} else {
-    			color = Color.white;
-    		}
+    		int offset = 0;
+    		int scan = width;
     		
-    		// fill the component contents with the chosen color
-    		g.setColor(color);
-    		g.fillRect(0, 0, getWidth(), getHeight());
+    		// we store one pixel per 32-bits, and integer is 32-bit wide
+    		bitmapMemory = new int[width*height];
+    		Arrays.fill(bitmapMemory, color.getRGB());
+    		bitmap = new MemoryImageSource(width, height, bitmapMemory, offset, scan);
+    		image = createImage(bitmap);
+    	}
+    	
+    	public void paintComponent(Graphics g) {
+    		g.drawImage(image,  0, 0, null);
+    		
 	    }
 		
     	@Override
@@ -74,6 +88,7 @@ public class Main {
 		@Override
 		public void componentResized(ComponentEvent e) {
 			System.out.println("resized width="+getWidth()+", height="+getHeight());
+			resizeBitmap(getWidth(), getHeight());
 		}
 
 		@Override

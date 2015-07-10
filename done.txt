@@ -11,4 +11,8 @@ Day 003: allocating a back buffer
   https://forums.handmadehero.org/jace/videos/win32-platform/day003.html
   - close the app when close button is clicked
   - handle event: window size changed
-  24:28 todo: manipulate bitmap directly via MemoryImageSource()  
+  - create bitmap from scratch: 32-bit per pixel: RGB + alpha
+
+Day 004: animating the back buffer
+  https://forums.handmadehero.org/jace/videos/win32-platform/day004.html
+  - fill the entire back buffer with blue color
