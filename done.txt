@@ -18,3 +18,7 @@ Day 004: animating the back buffer
   - fill the entire back buffer with blue color
   - fill the entire back buffer with a weird gradient 256x256 pixels
     window resizing animates the weird gradient 
+    
+Day 005: Windows graphics review
+  https://forums.handmadehero.org/jace/videos/win32-platform/day005.html
+  - code refactoring: encapsulate back buffer related code

@@ -16,7 +16,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		// create the main frame window
-		JFrame frame = new JFrame("Handmade Hero Day 004");
+		JFrame frame = new JFrame("Handmade Hero Day 005");
 		
 		// exit the application when Close button is clicked
 		// Note: the default is JFrame.HIDE_ON_CLOSE — Hide the frame, but keep 
@@ -52,43 +52,20 @@ public class Main {
     	
 		private static final long serialVersionUID = 1L;
 
-    	int[] bitmapMemory = null;
-    	MemoryImageSource bitmap = null;
-    	Image image;
 		int xOffset = 0;
 		int yOffset = 0;
+    	BackBuffer backBuffer = new BackBuffer();
     	
-    	void createWeirdGradient(int width, int height, int xOffset, int yOffset) {
-    		
-    		bitmapMemory = new int[width*height];
-
-    		// we store one pixel per 32-bits, and integer is 32-bit wide
-    		int pos = 0;
-    		for( int y=0; y<height; y++ ) {
-    			for( int x=0; x<width; x++ ) {
-    				int blue = (x + xOffset)%256;
-    				int green = (y + yOffset)%256;
-    				bitmapMemory[pos++] = new Color(0, green, blue).getRGB();
-    			}
-    		}
-    	}
-
-    	void resizeBitmap(int width, int height) {
+    	void resizeBackBuffer(int width, int height) {
     	
-    		int offset = 0;
-    		int scan = width;
-
-    		// render weird gradient
-    		createWeirdGradient(width, height, xOffset, yOffset);
-    		bitmap = new MemoryImageSource(width, height, bitmapMemory, offset, scan);
-    		image = createImage(bitmap);
+    		backBuffer.createWeirdGradient(width, height, xOffset, yOffset);
     		
     		xOffset++; // animate weird gradient with every window resize
     	}
     	
     	public void paintComponent(Graphics g) {
-    		g.drawImage(image,  0, 0, null);
-    		
+    		// display offscreen buffer in window
+    		backBuffer.renderWeirdGradient(this, g);
 	    }
 		
     	@Override
@@ -102,11 +79,44 @@ public class Main {
 		@Override
 		public void componentResized(ComponentEvent e) {
 			System.out.println("resized width="+getWidth()+", height="+getHeight());
-			resizeBitmap(getWidth(), getHeight());
+			resizeBackBuffer(getWidth(), getHeight());
 		}
 
 		@Override
 		public void componentShown(ComponentEvent e) {
 		}
 	}
+    
+    static class BackBuffer {
+    	int[] bitmapMemory = null;
+    	MemoryImageSource bitmap = null;
+    	int width;
+    	int height;
+    	int bytesPerPixel = 4;
+    	int pitch;
+
+    	public void createWeirdGradient(int width, int height, int xOffset, int yOffset) {
+    		
+    		this.width = pitch = width;
+    		this.height = height;
+    		
+    		bitmapMemory = new int[width*height];
+
+    		// we store one pixel per 32-bits, and integer is 32-bit wide
+    		int pos = 0;
+    		for( int y=0; y<height; y++ ) {
+    			for( int x=0; x<width; x++ ) {
+    				int blue = (x + xOffset)%256;
+    				int green = (y + yOffset)%256;
+    				bitmapMemory[pos++] = new Color(0, green, blue).getRGB();
+    			}
+    		}
+    		bitmap = new MemoryImageSource(width, height, bitmapMemory, 0, pitch);
+    	}
+    	
+    	public void renderWeirdGradient(JComponent component, Graphics g) {
+    		Image image = component.createImage(bitmap);
+    		g.drawImage(image,  0, 0, null);
+    	}
+    }
 }
