@@ -55,21 +55,36 @@ public class Main {
     	
 		private static final long serialVersionUID = 1L;
 
-		Color color = Color.blue;
     	int[] bitmapMemory = null;
     	MemoryImageSource bitmap = null;
     	Image image;
+		int xOffset = 0;
+		int yOffset = 0;
     	
-    	void resizeBitmap(int width, int height) {
+    	void createWeirdGradient(int width, int height, int xOffset, int yOffset) {
     		
+    		bitmapMemory = new int[width*height];
+
+    		// we store one pixel per 32-bits, and integer is 32-bit wide
+    		int pos = 0;
+    		for( int y=0; y<height; y++ ) {
+    			for( int x=0; x<width; x++ ) {
+    				bitmapMemory[pos++] = new Color(0, (y+yOffset)%256, (x+xOffset)%256).getRGB();
+    			}
+    		}
+    	}
+
+    	void resizeBitmap(int width, int height) {
+    	
     		int offset = 0;
     		int scan = width;
-    		
-    		// we store one pixel per 32-bits, and integer is 32-bit wide
-    		bitmapMemory = new int[width*height];
-    		Arrays.fill(bitmapMemory, color.getRGB());
+
+    		// render weird gradient
+    		createWeirdGradient(width, height, xOffset, yOffset);
     		bitmap = new MemoryImageSource(width, height, bitmapMemory, offset, scan);
     		image = createImage(bitmap);
+    		
+    		xOffset++; // animate weird gradient with every window resize
     	}
     	
     	public void paintComponent(Graphics g) {

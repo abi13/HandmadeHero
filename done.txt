@@ -16,3 +16,5 @@ Day 003: allocating a back buffer
 Day 004: animating the back buffer
   https://forums.handmadehero.org/jace/videos/win32-platform/day004.html
   - fill the entire back buffer with blue color
+  - fill the entire back buffer with a weird gradient 256x256 pixels
+    window resizing animates the weird gradient 
