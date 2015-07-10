@@ -6,10 +6,7 @@ import java.awt.Image;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.image.MemoryImageSource;
-import java.io.File;
-import java.util.Arrays;
 
-import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
@@ -30,8 +27,8 @@ public class Main {
 		// center the main frame window
 		frame.setLocationRelativeTo(null);
 
-		// set initial window size to be 300x100
-		frame.setSize(300, 100);
+		// set initial window size to be 600x300
+		frame.setSize(600, 300);
 		
 		// set custom content pane
 		MainContentPane mainContentPane = new MainContentPane();
@@ -69,7 +66,9 @@ public class Main {
     		int pos = 0;
     		for( int y=0; y<height; y++ ) {
     			for( int x=0; x<width; x++ ) {
-    				bitmapMemory[pos++] = new Color(0, (y+yOffset)%256, (x+xOffset)%256).getRGB();
+    				int blue = (x + xOffset)%256;
+    				int green = (y + yOffset)%256;
+    				bitmapMemory[pos++] = new Color(0, green, blue).getRGB();
     			}
     		}
     	}
