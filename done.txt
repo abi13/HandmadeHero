@@ -22,3 +22,4 @@ Day 004: animating the back buffer
 Day 005: Windows graphics review
   https://forums.handmadehero.org/jace/videos/win32-platform/day005.html
   - code refactoring: encapsulate back buffer related code
+  - create fixed size back buffer 1280x760 pixels 

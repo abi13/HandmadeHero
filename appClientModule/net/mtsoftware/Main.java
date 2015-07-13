@@ -56,16 +56,9 @@ public class Main {
 		int yOffset = 0;
     	BackBuffer backBuffer = new BackBuffer();
     	
-    	void resizeBackBuffer(int width, int height) {
-    	
-    		backBuffer.createWeirdGradient(width, height, xOffset, yOffset);
-    		
-    		xOffset++; // animate weird gradient with every window resize
-    	}
-    	
     	public void paintComponent(Graphics g) {
     		// display offscreen buffer in window
-    		backBuffer.renderWeirdGradient(this, g);
+    		backBuffer.renderWeirdGradient(this, g, getWidth(), getHeight(), xOffset, yOffset);
 	    }
 		
     	@Override
@@ -78,8 +71,9 @@ public class Main {
 		
 		@Override
 		public void componentResized(ComponentEvent e) {
-			System.out.println("resized width="+getWidth()+", height="+getHeight());
-			resizeBackBuffer(getWidth(), getHeight());
+    		// animate weird gradient with every window resize
+    		xOffset++; 
+    		yOffset++;
 		}
 
 		@Override
@@ -87,34 +81,42 @@ public class Main {
 		}
 	}
     
+    // fixed size back buffer 1280x760 pixels
     static class BackBuffer {
     	int[] bitmapMemory = null;
-    	MemoryImageSource bitmap = null;
-    	int width;
-    	int height;
+    	final int width = 1280;
+    	final int height = 760;
     	int bytesPerPixel = 4;
-    	int pitch;
+    	int pitch = width;
 
-    	public void createWeirdGradient(int width, int height, int xOffset, int yOffset) {
+    	public BackBuffer() {
+    		createWeirdGradient();
+    	}
+    	
+    	public void createWeirdGradient() {
     		
-    		this.width = pitch = width;
-    		this.height = height;
-    		
+    		// allocate bitmap memory
     		bitmapMemory = new int[width*height];
-
+    	}
+    	
+    	public void animateWeirdGradient(int xOffset, int yOffset) {
+    		
     		// we store one pixel per 32-bits, and integer is 32-bit wide
     		int pos = 0;
     		for( int y=0; y<height; y++ ) {
     			for( int x=0; x<width; x++ ) {
-    				int blue = (x + xOffset)%256;
-    				int green = (y + yOffset)%256;
+    				int blue = (x+xOffset)%256;
+    				int green = (y+yOffset)%256;
     				bitmapMemory[pos++] = new Color(0, green, blue).getRGB();
     			}
     		}
-    		bitmap = new MemoryImageSource(width, height, bitmapMemory, 0, pitch);
     	}
-    	
-    	public void renderWeirdGradient(JComponent component, Graphics g) {
+
+    	public void renderWeirdGradient(JComponent component, Graphics g, 
+    			int width, int height, int xOffset, int yOffset) {
+    		
+    		animateWeirdGradient(xOffset, yOffset);
+    		MemoryImageSource bitmap = new MemoryImageSource(width, height, bitmapMemory, 0, pitch);
     		Image image = component.createImage(bitmap);
     		g.drawImage(image,  0, 0, null);
     	}
