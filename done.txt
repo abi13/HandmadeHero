@@ -22,4 +22,11 @@ Day 004: animating the back buffer
 Day 005: Windows graphics review
   https://forums.handmadehero.org/jace/videos/win32-platform/day005.html
   - code refactoring: encapsulate back buffer related code
-  - create fixed size back buffer 1280x760 pixels 
+  - create fixed size back buffer 1280x760 pixels
+  
+Day 006: gamepad and keyboard input
+  https://forums.handmadehero.org/jace/videos/win32-platform/day006.html
+   (Win: discussed XInput API)
+   (Win: discussed unresolved external symbols and dynamic dll loading
+         by using LoadLibrary() and GetProcAddress())
+  - setup key binding and handler for the 'Esc' key
