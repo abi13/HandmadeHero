@@ -1,14 +1,10 @@
 package net.mtsoftware;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.MemoryImageSource;
 
-import javax.swing.JComponent;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 
 public class Main {
@@ -16,7 +12,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		// create the main frame window
-		JFrame frame = new JFrame("Handmade Hero Day 005");
+		JFrame frame = new JFrame("Handmade Hero Day 006");
 		
 		// exit the application when Close button is clicked
 		// Note: the default is JFrame.HIDE_ON_CLOSE — Hide the frame, but keep 
@@ -55,6 +51,20 @@ public class Main {
 		int xOffset = 0;
 		int yOffset = 0;
     	BackBuffer backBuffer = new BackBuffer();
+    	
+    	Action keyEscHandler = new AbstractAction() {
+			@Override
+    		public void actionPerformed(ActionEvent e) {
+    			System.out.println(" Esc key");
+    		}
+    	};
+    	
+    	public MainContentPane() {
+    	
+    		// setup key bindings: debug all presses of Esc key
+    		getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE,0), "Esc");
+    		getActionMap().put("Esc", keyEscHandler);
+    	}
     	
     	public void paintComponent(Graphics g) {
     		// display offscreen buffer in window

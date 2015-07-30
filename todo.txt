@@ -1,0 +1,7 @@
+1) Implement code to handle XBox controller in Java (f.e. use JXInput library)
+  
+  
+How to do this in Windows:
+  this technology is called XInput
+  once per frame call XInputGetState() for every attached controller
+  dynamically call a library 
