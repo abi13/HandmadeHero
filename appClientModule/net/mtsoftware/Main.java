@@ -9,10 +9,14 @@ import javax.swing.*;
 
 public class Main {
 	
+	static boolean isRunning = true;
+	static JFrame frame;
+	static MainContentPane pane;
+	
 	public static void main(String[] args) {
 		
 		// create the main frame window
-		JFrame frame = new JFrame("Handmade Hero Day 006");
+		frame = new JFrame("Handmade Hero Day 007");
 		
 		// exit the application when Close button is clicked
 		// Note: the default is JFrame.HIDE_ON_CLOSE — Hide the frame, but keep 
@@ -27,16 +31,23 @@ public class Main {
 		frame.setSize(600, 300);
 		
 		// set custom content pane
-		MainContentPane mainContentPane = new MainContentPane();
-		frame.setContentPane(mainContentPane);
-
-		// added handling of events when main content pane is resized / moved/ shown/ hidden
-		frame.addComponentListener(mainContentPane);
+		pane = new MainContentPane();
+		frame.setContentPane(pane);
 
 		// show it
 		frame.setVisible(true);
+		
+		// our game loop
+		runGameLoop();
 	}
 
+	static void runGameLoop() {
+		
+		while(isRunning) {
+			pane.animate();
+		}
+	}
+	
 	/* (non-Java-doc)
 	 * @see java.lang.Object#Object()
 	 */
@@ -44,7 +55,7 @@ public class Main {
 		super();
 	}
 	
-    static class MainContentPane extends JComponent implements ComponentListener {
+    static class MainContentPane extends JComponent {
     	
 		private static final long serialVersionUID = 1L;
 
@@ -70,25 +81,12 @@ public class Main {
     		// display offscreen buffer in window
     		backBuffer.renderWeirdGradient(this, g, getWidth(), getHeight(), xOffset, yOffset);
 	    }
-		
-    	@Override
-		public void componentHidden(ComponentEvent e) {
-		}
-
-    	@Override
-		public void componentMoved(ComponentEvent e) {
-		}
-		
-		@Override
-		public void componentResized(ComponentEvent e) {
-    		// animate weird gradient with every window resize
-    		xOffset++; 
+    	
+    	public void animate() {
+    		xOffset++;
     		yOffset++;
-		}
-
-		@Override
-		public void componentShown(ComponentEvent e) {
-		}
+    		paintComponent(getGraphics());
+    	}
 	}
     
     // fixed size back buffer 1280x760 pixels

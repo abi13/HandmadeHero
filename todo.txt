@@ -5,3 +5,11 @@ How to do this in Windows:
   this technology is called XInput
   once per frame call XInputGetState() for every attached controller
   dynamically call a library 
+  
+  
+  http://stackoverflow.com/questions/8632104/sine-wave-sound-generator-in-java
+  http://docs.oracle.com/javase/6/docs/api/javax/sound/sampled/DataLine.html
+  
+  game loop
+  http://www.java-gaming.org/index.php?topic=24220.0
+  http://www.ntu.edu.sg/home/ehchua/programming/java/J8d_Game_Framework.html

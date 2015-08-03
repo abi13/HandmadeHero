@@ -30,3 +30,13 @@ Day 006: gamepad and keyboard input
    (Win: discussed unresolved external symbols and dynamic dll loading
          by using LoadLibrary() and GetProcAddress())
   - setup key binding and handler for the 'Esc' key
+  
+Day 007: initializing DirectSound
+  https://forums.handmadehero.org/jace/videos/win32-platform/day007.html
+  (Win: discussed DirectSound API, primary and secondary buffers)
+  - nowadays audio is 48kHz, we'll use 2 sec audio buffer, 2 channels, 16 bit per sample
+    note: in a buffer you have 16 bit for LEFT channel, and 16-bit for RIGHT channel,
+          so that makes 4 bytes, or 32-bit per one sound sample
+  - game loop implemented to do continuous rendering of weird gradient 
+  42:30
+  
