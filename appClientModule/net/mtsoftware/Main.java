@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.MemoryImageSource;
 
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 
 
@@ -12,11 +13,12 @@ public class Main {
 	static boolean isRunning = true;
 	static JFrame frame;
 	static MainContentPane pane;
+	static GameSound sound;
 	
 	public static void main(String[] args) {
 		
 		// create the main frame window
-		frame = new JFrame("Handmade Hero Day 007");
+		frame = new JFrame("Handmade Hero Day 008");
 		
 		// exit the application when Close button is clicked
 		// Note: the default is JFrame.HIDE_ON_CLOSE — Hide the frame, but keep 
@@ -37,6 +39,13 @@ public class Main {
 		// show it
 		frame.setVisible(true);
 		
+		try {
+			sound = new GameSound();
+			sound.init();
+		} catch(LineUnavailableException e) {
+			e.printStackTrace();
+		}
+		
 		// our game loop
 		runGameLoop();
 	}
@@ -45,6 +54,7 @@ public class Main {
 		
 		while(isRunning) {
 			pane.animate();
+			sound.play();
 		}
 	}
 	

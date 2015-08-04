@@ -38,5 +38,9 @@ Day 007: initializing DirectSound
     note: in a buffer you have 16 bit for LEFT channel, and 16-bit for RIGHT channel,
           so that makes 4 bytes, or 32-bit per one sound sample
   - game loop implemented to do continuous rendering of weird gradient 
-  42:30
-  
+
+Day 008: writing a square wave sound
+  https://forums.handmadehero.org/jace/videos/win32-platform/day008.html
+  (Win: discussed how to write a square wave to DirectSound)
+  - generating square wave audio of given frequency (medium C tone) 
+  50:08
