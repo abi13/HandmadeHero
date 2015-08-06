@@ -49,6 +49,6 @@ Day 009: variable pitch sine wave sound
   - square waves are harsh, so sine waves will be used instead to generate smoother sound
   - fixed point and floating point arithmetic explained
   - floating point arithmetic will be simulated by integer arithmetic
-  - implemented sine wave sound, but after few seconds you start hearing noise that intensifies 
-  48:58
+  - implemented sine wave sound 
+  - pressing arrow up increases tone frequency, pressing arrow down decreases
   

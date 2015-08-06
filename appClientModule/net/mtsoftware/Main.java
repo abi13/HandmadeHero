@@ -42,6 +42,7 @@ public class Main {
 		try {
 			sound = new GameSound();
 			sound.init();
+			pane.sound = sound;
 		} catch(LineUnavailableException e) {
 			e.printStackTrace();
 		}
@@ -72,19 +73,28 @@ public class Main {
 		int xOffset = 0;
 		int yOffset = 0;
     	BackBuffer backBuffer = new BackBuffer();
+    	GameSound sound;
     	
-    	Action keyEscHandler = new AbstractAction() {
+    	Action keyUpHandler = new AbstractAction() {
 			@Override
     		public void actionPerformed(ActionEvent e) {
-    			System.out.println(" Esc key");
+				sound.increaseTone();
+    		}
+    	};
+
+    	Action keyDownHandler = new AbstractAction() {
+			@Override
+    		public void actionPerformed(ActionEvent e) {
+				sound.decreaseTone();
     		}
     	};
     	
     	public MainContentPane() {
     	
-    		// setup key bindings: debug all presses of Esc key
-    		getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE,0), "Esc");
-    		getActionMap().put("Esc", keyEscHandler);
+    		getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_UP,0), "Up");
+    		getActionMap().put("Up", keyUpHandler);
+    		getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,0), "Down");
+    		getActionMap().put("Down", keyDownHandler);
     	}
     	
     	public void paintComponent(Graphics g) {

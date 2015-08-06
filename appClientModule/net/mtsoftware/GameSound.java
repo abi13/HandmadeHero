@@ -13,14 +13,25 @@ public class GameSound {
 	final int BYTES_PER_SAMPLE = CHANNELS * SAMPLE_SIZE_IN_BITS / 8;
 	final boolean DATA_IS_SIGNED = true;
 	final boolean DATA_IS_BIGENDIAN = true;
-	final int TONE_HZ = 261; // middle c tone
 	final int TONE_VOLUME = 100; // 0..127
-	final int WAVE_PERIOD = SAMPLE_RATE / TONE_HZ;
 	
 	SourceDataLine soundLine;
 	long samplesPlayed;
 	long samplesWritten;
+	double sineAngle = 0.0;
+	int toneHz = 256; // middle c tone
+	int wavePeriod = SAMPLE_RATE / toneHz;
+
+	void increaseTone() {
+		toneHz += 20;
+		wavePeriod = SAMPLE_RATE / toneHz;
+	}
 	
+	void decreaseTone() {
+		toneHz -= 20;
+		wavePeriod = SAMPLE_RATE / toneHz;
+	}
+
 	void init() throws LineUnavailableException {
 		
 		AudioFormat af = new AudioFormat(
@@ -54,8 +65,8 @@ public class GameSound {
 		int bytesToWrite = samplesToWrite * BYTES_PER_SAMPLE;
 		byte[] buf = new byte[bytesToWrite];
 		for(int i=0; i<buf.length; ) {
-			double angle = (2.0 * Math.PI * samplesWritten) / WAVE_PERIOD;
-			byte value = (byte) (Math.sin(angle) * TONE_VOLUME); 
+			sineAngle += (2.0 * Math.PI) / wavePeriod;
+			byte value = (byte) (Math.sin(sineAngle) * TONE_VOLUME); 
 			buf[i++] = value;  
 			buf[i++] = value;  
 			buf[i++] = value;  
