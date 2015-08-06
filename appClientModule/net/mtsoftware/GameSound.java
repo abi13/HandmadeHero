@@ -13,11 +13,11 @@ public class GameSound {
 	final boolean DATA_IS_SIGNED = true;
 	final boolean DATA_IS_BIGENDIAN = true;
 	final int TONE_HZ = 261; // middle c tone
+	final int TONE_VOLUME = 100; // 0..127
 	
 	SourceDataLine soundLine;
 	long samplesPlayed;
 	long samplesWritten;
-	long writePointer;
 	
 	void init() throws LineUnavailableException {
 		
@@ -50,23 +50,13 @@ public class GameSound {
 		int bytesToWrite = samplesToWrite * CHANNELS * SAMPLE_SIZE_IN_BITS/8;
 		byte[] buf = new byte[bytesToWrite];
 		int samplingInterval = (int)(CHANNELS * SAMPLE_RATE / TONE_HZ);
+		long sample = samplesWritten;
 		for(int i=0; i<buf.length; i++) {
-			boolean isLow = (writePointer % samplingInterval) < (samplingInterval/2);
-			buf[i] = isLow ? (byte)-127 : (byte)127;
-			writePointer++;
+			double angle = (2.0 * Math.PI * sample) / samplingInterval;
+			buf[i] = (byte) (Math.sin(angle) * TONE_VOLUME);
+			sample++;
 		}
-		soundLine.write(buf, 0, buf.length);
 		samplesWritten += samplesToWrite;
-	}
-
-	void playSin(int ms) {
-		byte[] sin = new byte[ms * SAMPLE_RATE / 1000];
-		double samplingInterval = (double)(CHANNELS * SAMPLE_RATE / TONE_HZ);
-		for(int i=0; i<sin.length; i++) {
-			double angle = (2.0 * Math.PI * writePointer) / samplingInterval;
-			sin[i] = (byte) (Math.sin(angle) * 127);
-			writePointer++;
-		}
-		soundLine.write(sin, 0, sin.length);
+		soundLine.write(buf, 0, buf.length);
 	}
 }

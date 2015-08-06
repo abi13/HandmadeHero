@@ -18,7 +18,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		// create the main frame window
-		frame = new JFrame("Handmade Hero Day 008");
+		frame = new JFrame("Handmade Hero Day 009");
 		
 		// exit the application when Close button is clicked
 		// Note: the default is JFrame.HIDE_ON_CLOSE — Hide the frame, but keep 
