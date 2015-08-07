@@ -51,4 +51,11 @@ Day 009: variable pitch sine wave sound
   - floating point arithmetic will be simulated by integer arithmetic
   - implemented sine wave sound 
   - pressing arrow up increases tone frequency, pressing arrow down decreases
-  
+  - introduced sound buffer latency: we no longer fill up the entire sound buffer (1sec latency)
+    instead we fill it up to 1/15sec worth of data
+    note: with 1sec latency, when pressing down/up arrows you need to wait up to 1sec
+      to notice changes in tone frequency
+
+Day 010: variable pitch sine wave sound
+  https://forums.handmadehero.org/jace/videos/win32-platform/day010.html
+        33:45

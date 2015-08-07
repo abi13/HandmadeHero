@@ -14,6 +14,7 @@ public class GameSound {
 	final boolean DATA_IS_SIGNED = true;
 	final boolean DATA_IS_BIGENDIAN = true;
 	final int TONE_VOLUME = 100; // 0..127
+	final int LATENCY_SAMPLE_COUNT = SAMPLE_RATE/15; // 1/15 sec
 	
 	SourceDataLine soundLine;
 	long samplesPlayed;
@@ -51,10 +52,9 @@ public class GameSound {
 	
 	void play() {
 		// determine number of sound frames to be written ahead;
-		// we want to keep the sound buffer full;
-		// the buffer size in frames is equal to SAMPLE_RATE (1 sec worth of sound data)
+		// we want to have in the sound buffer up to LATENCY_SAMPLE_COUNT samples
 		samplesPlayed = soundLine.getLongFramePosition();
-		int samplesToWrite = (int) (samplesPlayed + SAMPLE_RATE - samplesWritten);
+		int samplesToWrite = (int) (samplesPlayed + LATENCY_SAMPLE_COUNT - samplesWritten);
 		if( samplesToWrite>0 ) {
 			play(samplesToWrite);
 		}

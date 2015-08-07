@@ -18,7 +18,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		// create the main frame window
-		frame = new JFrame("Handmade Hero Day 009");
+		frame = new JFrame("Handmade Hero Day 010");
 		
 		// exit the application when Close button is clicked
 		// Note: the default is JFrame.HIDE_ON_CLOSE — Hide the frame, but keep 
@@ -53,9 +53,20 @@ public class Main {
 
 	static void runGameLoop() {
 		
+		GameClock clock = new GameClock();
+		clock.start();
+		
 		while(isRunning) {
+			clock.updateGameLogicCounter();
+			
 			pane.animate();
+			clock.updateGraphicsCounter();
+
 			sound.play();
+			clock.updateSoundCounter();
+
+			clock.printPerformanceVariables();
+			clock.newFrame();
 		}
 	}
 	
