@@ -24,12 +24,12 @@ public class GameSound {
 	int wavePeriod = SAMPLE_RATE / toneHz;
 
 	void increaseTone() {
-		toneHz += 20;
+		toneHz += 1;
 		wavePeriod = SAMPLE_RATE / toneHz;
 	}
 	
 	void decreaseTone() {
-		toneHz -= 20;
+		toneHz -= 1;
 		wavePeriod = SAMPLE_RATE / toneHz;
 	}
 

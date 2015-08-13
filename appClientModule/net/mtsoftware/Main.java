@@ -14,11 +14,12 @@ public class Main {
 	static JFrame frame;
 	static MainContentPane pane;
 	static GameSound sound;
+	static GameInput input;
 	
 	public static void main(String[] args) {
 		
 		// create the main frame window
-		frame = new JFrame("Handmade Hero Day 010");
+		frame = new JFrame("Handmade Hero Day 013");
 		
 		// exit the application when Close button is clicked
 		// Note: the default is JFrame.HIDE_ON_CLOSE — Hide the frame, but keep 
@@ -40,9 +41,10 @@ public class Main {
 		frame.setVisible(true);
 		
 		try {
+			input = new GameInput();
 			sound = new GameSound();
 			sound.init();
-			pane.sound = sound;
+			frame.addKeyListener(input);
 		} catch(LineUnavailableException e) {
 			e.printStackTrace();
 		}
@@ -58,6 +60,18 @@ public class Main {
 		
 		while(isRunning) {
 			clock.updateGameLogicCounter();
+			if( input.isUpKeyDown() ) {
+				sound.increaseTone();
+			}
+			if( input.isDownKeyDown() ) {
+				sound.decreaseTone();
+			}
+			if( input.isLeftKeyDown() ) {
+				pane.incrementXOffset();
+			}
+			if( input.isRightKeyDown() ) {
+				pane.incrementYOffset();
+			}
 			
 			pane.animate();
 			clock.updateGraphicsCounter();
@@ -67,6 +81,7 @@ public class Main {
 
 			clock.printPerformanceVariables();
 			clock.newFrame();
+			input.finishFrame();
 		}
 	}
 	
@@ -84,28 +99,8 @@ public class Main {
 		int xOffset = 0;
 		int yOffset = 0;
     	BackBuffer backBuffer = new BackBuffer();
-    	GameSound sound;
-    	
-    	Action keyUpHandler = new AbstractAction() {
-			@Override
-    		public void actionPerformed(ActionEvent e) {
-				sound.increaseTone();
-    		}
-    	};
-
-    	Action keyDownHandler = new AbstractAction() {
-			@Override
-    		public void actionPerformed(ActionEvent e) {
-				sound.decreaseTone();
-    		}
-    	};
     	
     	public MainContentPane() {
-    	
-    		getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_UP,0), "Up");
-    		getActionMap().put("Up", keyUpHandler);
-    		getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,0), "Down");
-    		getActionMap().put("Down", keyDownHandler);
     	}
     	
     	public void paintComponent(Graphics g) {
@@ -113,9 +108,15 @@ public class Main {
     		backBuffer.renderWeirdGradient(this, g, getWidth(), getHeight(), xOffset, yOffset);
 	    }
     	
-    	public void animate() {
+    	public void incrementXOffset() {
     		xOffset++;
+    	}
+    	
+    	public void incrementYOffset() {
     		yOffset++;
+    	}
+
+    	public void animate() {
     		paintComponent(getGraphics());
     	}
 	}

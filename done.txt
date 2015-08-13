@@ -56,6 +56,23 @@ Day 009: variable pitch sine wave sound
     note: with 1sec latency, when pressing down/up arrows you need to wait up to 1sec
       to notice changes in tone frequency
 
-Day 010: variable pitch sine wave sound
+Day 010: performance counters
   https://forums.handmadehero.org/jace/videos/win32-platform/day010.html
-        33:45
+  - (Win: discussed QueryPerformanceCounter, RDTSC, wsprintf, sprintf)
+  - implemented frame timing, to determine fps (it was 400+ fps on 8 core intel core i7)
+   
+Day 011: basics of platform design
+  https://forums.handmadehero.org/jace/videos/win32-platform/day011.html
+  - (Win: platform-specific code and cross-platform code are kept in separate files)
+  
+Day 012: platform-independent sound output
+  https://forums.handmadehero.org/jace/videos/win32-platform/day012.html
+  - (Win: discuss memory allocations on stack (alloca))
+  - (Win: allocate a big sound buffer at the beginning and fill up regions of this buffer
+          as needed, to be written later to DirectSound buffers)
+  - GameSound class is already using big Java-allocated sound buffer to be used by the game
+
+Day 013: platform-independent user input
+  https://forums.handmadehero.org/jace/videos/win32-platform/day013.html
+  - (C++: discussed function overloading)
+  47:00
