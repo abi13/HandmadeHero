@@ -75,4 +75,13 @@ Day 012: platform-independent sound output
 Day 013: platform-independent user input
   https://forums.handmadehero.org/jace/videos/win32-platform/day013.html
   - (C++: discussed function overloading)
-  47:00
+  - implemented keyboard listener handling UP, DOWN, LEFT and RIGHT keys
+
+Day 014: platform-independent game memory
+  https://forums.handmadehero.org/jace/videos/win32-platform/day014.html
+  - (Win: preallocating two memory pools: permanent storage and transient storage)
+  
+Day 015: platform-independent debug file I/O
+  https://forums.handmadehero.org/jace/videos/win32-platform/day015.html
+  - (Win: )
+  
