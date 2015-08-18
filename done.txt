@@ -83,5 +83,12 @@ Day 014: platform-independent game memory
   
 Day 015: platform-independent debug file I/O
   https://forums.handmadehero.org/jace/videos/win32-platform/day015.html
-  - (Win: )
-  
+  - created GameAssets class that allows to read a file into memory, and write a file to disk
+
+Day 016: VisualStudio compiler switches
+  https://forums.handmadehero.org/jace/videos/win32-platform/day016.html
+  - (Win: discussed C/C++ compiler warnings, compiling 32-bit executable, name mangling)
+  - keyboard mappings implemented: 
+    up,down,left,right keys are mapped as up,down,left,right gamepad events
+    Q - left shoulder, E - right shoulder
+    

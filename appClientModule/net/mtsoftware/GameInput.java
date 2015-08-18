@@ -14,23 +14,25 @@ import java.awt.event.KeyListener;
 public class GameInput implements KeyListener {
 
 	// controllers
-	public final int KEYBOARD_OLD = 0;
-	public final int KEYBOARD_NEW = 1;
+	static public final int KEYBOARD = 0;
+	static public final int CONTROLLER_NEW = 1;
+	static public final int CONTROLLER_OLD = 1;
 
 	// buttons
-	public final int UP = 0;
-	public final int DOWN = 1;
-	public final int LEFT = 2;
-	public final int RIGHT = 3;
-	public final int LEFT_SHOULDER = 4;
-	public final int RIGHT_SHOULDER = 5;
+	static public final int UP = 0;
+	static public final int DOWN = 1;
+	static public final int LEFT = 2;
+	static public final int RIGHT = 3;
+	static public final int LEFT_SHOULDER = 4;
+	static public final int RIGHT_SHOULDER = 5;
 	
 	private GameControllerInput[] controllers;
 	
 	public GameInput() {
-		controllers = new GameControllerInput[2];
-		controllers[KEYBOARD_OLD] = new GameControllerInput();
-		controllers[KEYBOARD_NEW] = new GameControllerInput();
+		controllers = new GameControllerInput[3];
+		controllers[KEYBOARD] = new GameControllerInput();
+		controllers[CONTROLLER_OLD] = new GameControllerInput();
+		controllers[CONTROLLER_NEW] = new GameControllerInput();
 	}
 	
 	class GameButtonState {
@@ -87,29 +89,14 @@ public class GameInput implements KeyListener {
 		}
 	}
 
-	boolean isUpKeyDown() {
-		return controllers[KEYBOARD_NEW].button[UP].endedDown &&
-				controllers[KEYBOARD_NEW].button[UP].halfTransitionCount!=0;
-	}
-	
-	boolean isDownKeyDown() {
-		return controllers[KEYBOARD_NEW].button[DOWN].endedDown &&
-				controllers[KEYBOARD_NEW].button[DOWN].halfTransitionCount!=0;
-	}
-
-	boolean isLeftKeyDown() {
-		return controllers[KEYBOARD_NEW].button[LEFT].endedDown &&
-				controllers[KEYBOARD_NEW].button[LEFT].halfTransitionCount!=0;
-	}
-	
-	boolean isRightKeyDown() {
-		return controllers[KEYBOARD_NEW].button[RIGHT].endedDown &&
-				controllers[KEYBOARD_NEW].button[RIGHT].halfTransitionCount!=0;
+	boolean isKeyDown(int button) {
+		return controllers[KEYBOARD].button[button].endedDown &&
+				controllers[KEYBOARD].button[button].halfTransitionCount!=0;
 	}
 
 	void finishFrame() {
 		// copy new controller to old controller
-		controllers[KEYBOARD_OLD].set(controllers[KEYBOARD_NEW]);
+		controllers[CONTROLLER_OLD].set(controllers[CONTROLLER_NEW]);
 	}
 	
 	@Override
@@ -122,13 +109,16 @@ public class GameInput implements KeyListener {
 			case KeyEvent.VK_DOWN: button = DOWN; break;
 			case KeyEvent.VK_LEFT: button = LEFT; break;
 			case KeyEvent.VK_RIGHT: button = RIGHT; break;
+			case KeyEvent.VK_Q: button = LEFT_SHOULDER; break;
+			case KeyEvent.VK_E: button = RIGHT_SHOULDER; break;
 		}
 
-		GameButtonState newState = controllers[KEYBOARD_NEW].button[button];
-		GameButtonState oldState = controllers[KEYBOARD_OLD].button[button];
+		GameButtonState newState = controllers[KEYBOARD].button[button];
 		
 		newState.endedDown = true;
-		newState.halfTransitionCount = newState.endedDown != oldState.endedDown ? 1 : 0;
+		newState.halfTransitionCount++;
+		// for digital button (game controller):
+		//newState.halfTransitionCount = newState.endedDown != oldState.endedDown ? 1 : 0;
 	}
 
 	@Override
@@ -141,13 +131,17 @@ public class GameInput implements KeyListener {
 			case KeyEvent.VK_DOWN: button = DOWN; break;
 			case KeyEvent.VK_LEFT: button = LEFT; break;
 			case KeyEvent.VK_RIGHT: button = RIGHT; break;
+			case KeyEvent.VK_Q: button = LEFT_SHOULDER; break;
+			case KeyEvent.VK_E: button = RIGHT_SHOULDER; break;
 		}
 
-		GameButtonState newState = controllers[KEYBOARD_NEW].button[button];
-		GameButtonState oldState = controllers[KEYBOARD_OLD].button[button];
+		GameButtonState newState = controllers[KEYBOARD].button[button];
 		
 		newState.endedDown = false;
-		newState.halfTransitionCount = newState.endedDown != oldState.endedDown ? 1 : 0;
+		newState.halfTransitionCount++;
+		
+		// for digital button (game controller):
+		//newState.halfTransitionCount = newState.endedDown != oldState.endedDown ? 1 : 0;
 	}
 
 	@Override

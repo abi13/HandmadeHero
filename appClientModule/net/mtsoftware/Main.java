@@ -1,7 +1,6 @@
 package net.mtsoftware;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.image.MemoryImageSource;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -19,7 +18,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		// create the main frame window
-		frame = new JFrame("Handmade Hero Day 015");
+		frame = new JFrame("Handmade Hero Day 016");
 		
 		// exit the application when Close button is clicked
 		// Note: the default is JFrame.HIDE_ON_CLOSE — Hide the frame, but keep 
@@ -60,17 +59,23 @@ public class Main {
 		
 		while(isRunning) {
 			clock.updateGameLogicCounter();
-			if( input.isUpKeyDown() ) {
+			if( input.isKeyDown(GameInput.UP) ) {
+				pane.incrementYOffset(+1);
+			}
+			if( input.isKeyDown(GameInput.DOWN) ) {
+				pane.incrementYOffset(-1);
+			}
+			if( input.isKeyDown(GameInput.LEFT) ) {
+				pane.incrementXOffset(+1);
+			}
+			if( input.isKeyDown(GameInput.RIGHT) ) {
+				pane.incrementXOffset(-1);
+			}
+			if( input.isKeyDown(GameInput.LEFT_SHOULDER) ) {
 				sound.increaseTone();
 			}
-			if( input.isDownKeyDown() ) {
+			if( input.isKeyDown(GameInput.RIGHT_SHOULDER) ) {
 				sound.decreaseTone();
-			}
-			if( input.isLeftKeyDown() ) {
-				pane.incrementXOffset();
-			}
-			if( input.isRightKeyDown() ) {
-				pane.incrementYOffset();
 			}
 			
 			pane.animate();
@@ -108,12 +113,16 @@ public class Main {
     		backBuffer.renderWeirdGradient(this, g, getWidth(), getHeight(), xOffset, yOffset);
 	    }
     	
-    	public void incrementXOffset() {
-    		xOffset++;
+    	public void incrementXOffset(int delta) {
+    		xOffset += delta;
+    		if( xOffset<0 )
+    			xOffset += 256;
     	}
     	
-    	public void incrementYOffset() {
-    		yOffset++;
+    	public void incrementYOffset(int delta) {
+    		yOffset += delta;
+    		if( yOffset<0 )
+    			yOffset += 256;
     	}
 
     	public void animate() {
