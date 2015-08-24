@@ -15,10 +15,10 @@ public class Main {
 	static GameSound sound;
 	static GameInput input;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		
 		// create the main frame window
-		frame = new JFrame("Handmade Hero Day 016");
+		frame = new JFrame("Handmade Hero Day 018");
 		
 		// exit the application when Close button is clicked
 		// Note: the default is JFrame.HIDE_ON_CLOSE — Hide the frame, but keep 
@@ -52,23 +52,23 @@ public class Main {
 		runGameLoop();
 	}
 
-	static void runGameLoop() {
+	static void runGameLoop() throws InterruptedException {
 		
 		GameClock clock = new GameClock();
 		clock.start();
 		
 		while(isRunning) {
 			clock.updateGameLogicCounter();
-			if( input.isKeyDown(GameInput.UP) ) {
+			if( input.isKeyDown(GameInput.ACTION_UP) ) {
 				pane.incrementYOffset(+1);
 			}
-			if( input.isKeyDown(GameInput.DOWN) ) {
+			if( input.isKeyDown(GameInput.ACTION_DOWN) ) {
 				pane.incrementYOffset(-1);
 			}
-			if( input.isKeyDown(GameInput.LEFT) ) {
+			if( input.isKeyDown(GameInput.ACTION_LEFT) ) {
 				pane.incrementXOffset(+1);
 			}
-			if( input.isKeyDown(GameInput.RIGHT) ) {
+			if( input.isKeyDown(GameInput.ACTION_RIGHT) ) {
 				pane.incrementXOffset(-1);
 			}
 			if( input.isKeyDown(GameInput.LEFT_SHOULDER) ) {
@@ -82,11 +82,12 @@ public class Main {
 			clock.updateGraphicsCounter();
 
 			sound.play();
+
+			input.finishFrame();
 			clock.updateSoundCounter();
 
 			clock.printPerformanceVariables();
 			clock.newFrame();
-			input.finishFrame();
 		}
 	}
 	

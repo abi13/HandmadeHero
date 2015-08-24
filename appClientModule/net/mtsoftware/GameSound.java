@@ -14,7 +14,7 @@ public class GameSound {
 	final boolean DATA_IS_SIGNED = true;
 	final boolean DATA_IS_BIGENDIAN = true;
 	final int TONE_VOLUME = 100; // 0..127
-	final int LATENCY_SAMPLE_COUNT = SAMPLE_RATE/15; // 1/15 sec
+	final int LATENCY_SAMPLE_COUNT = SAMPLE_RATE/10; // 1/10 sec
 	
 	SourceDataLine soundLine;
 	long samplesPlayed;

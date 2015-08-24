@@ -16,6 +16,10 @@ package net.mtsoftware;
  */
 public class GameClock {
 
+	public static final int MONITOR_REFRESH_HZ = 60;
+	public static final int GAME_UPDATE_HZ = MONITOR_REFRESH_HZ/2;
+	public static final long NANOSECONDS_ELAPSED_PER_FRAME = 1000000000 / GAME_UPDATE_HZ;
+	
 	long lastCounter; // time counter in ns at the end of previous game frame
 	long counter1; // time counter in ns at the end of update-game-logic phase
 	long counter2; // time counter in ns at the end of update-graphics phase
@@ -33,7 +37,14 @@ public class GameClock {
 		counter3 = System.nanoTime();
 	}
 
-	void newFrame() {
+	void newFrame() throws InterruptedException {
+		// compute nr of ns to sleep until the end of the current frame
+		long nsToSleep = NANOSECONDS_ELAPSED_PER_FRAME - counter3 + lastCounter;
+		if( nsToSleep>0 ) {
+			System.out.println("sleep "+nsToSleep/1000000+"ms");
+			Thread.sleep(nsToSleep/1000000, (int)(nsToSleep%1000000));
+		}
+
 		lastCounter = counter3;
 	}
 	

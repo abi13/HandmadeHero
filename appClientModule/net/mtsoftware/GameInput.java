@@ -19,12 +19,17 @@ public class GameInput implements KeyListener {
 	static public final int CONTROLLER_OLD = 1;
 
 	// buttons
-	static public final int UP = 0;
-	static public final int DOWN = 1;
-	static public final int LEFT = 2;
-	static public final int RIGHT = 3;
-	static public final int LEFT_SHOULDER = 4;
-	static public final int RIGHT_SHOULDER = 5;
+	static public final int MOVE_UP = 0;
+	static public final int MOVE_DOWN = 1;
+	static public final int MOVE_LEFT = 2;
+	static public final int MOVE_RIGHT = 3;
+	static public final int ACTION_UP = 4;
+	static public final int ACTION_DOWN = 5;
+	static public final int ACTION_LEFT = 6;
+	static public final int ACTION_RIGHT = 7;
+	static public final int LEFT_SHOULDER = 8;
+	static public final int RIGHT_SHOULDER = 9;
+	static public final int BUTTON_COUNT = 10;
 	
 	private GameControllerInput[] controllers;
 	
@@ -52,20 +57,14 @@ public class GameInput implements KeyListener {
 		public boolean isAnalog;
 
 		// state of controller stick
-		public float startX;
-		public float startY;
-		public float minX;
-		public float minY;
-		public float maxX;
-		public float maxY;
-		public float endX;
-		public float endY;
+		public float stickAverageX;
+		public float stickAverageY;
 		
 		public GameButtonState[] button;
 		
 		public GameControllerInput() {
 			 
-			button = new GameButtonState[6];
+			button = new GameButtonState[BUTTON_COUNT];
 			 
 			for( int i=0; i<button.length; i++ ) {
 				button[i] = new GameButtonState();
@@ -74,14 +73,8 @@ public class GameInput implements KeyListener {
 		
 		public void set(GameControllerInput i) {
 			this.isAnalog = i.isAnalog;
-			this.startX = i.startX;
-			this.startY = i.startY;
-			this.minX = i.minX;
-			this.minY = i.minY;
-			this.maxX = i.maxX;
-			this.maxY = i.maxY;
-			this.endX = i.endX;
-			this.endY = i.endY;
+			this.stickAverageX = i.stickAverageX;
+			this.stickAverageY = i.stickAverageY;
 
 			for( int j=0; j<button.length; j++ ) {
 				button[j].set(i.button[j]);
@@ -105,10 +98,14 @@ public class GameInput implements KeyListener {
 		int button = -1;
 		
 		switch(event.getKeyCode()) {
-			case KeyEvent.VK_UP: button = UP; break;
-			case KeyEvent.VK_DOWN: button = DOWN; break;
-			case KeyEvent.VK_LEFT: button = LEFT; break;
-			case KeyEvent.VK_RIGHT: button = RIGHT; break;
+			case KeyEvent.VK_W: button = MOVE_UP; break;
+			case KeyEvent.VK_S: button = MOVE_DOWN; break;
+			case KeyEvent.VK_A: button = MOVE_LEFT; break;
+			case KeyEvent.VK_D: button = MOVE_RIGHT; break;
+			case KeyEvent.VK_UP: button = ACTION_UP; break;
+			case KeyEvent.VK_DOWN: button = ACTION_DOWN; break;
+			case KeyEvent.VK_LEFT: button = ACTION_LEFT; break;
+			case KeyEvent.VK_RIGHT: button = ACTION_RIGHT; break;
 			case KeyEvent.VK_Q: button = LEFT_SHOULDER; break;
 			case KeyEvent.VK_E: button = RIGHT_SHOULDER; break;
 		}
@@ -127,10 +124,14 @@ public class GameInput implements KeyListener {
 		int button = -1;
 		
 		switch(event.getKeyCode()) {
-			case KeyEvent.VK_UP: button = UP; break;
-			case KeyEvent.VK_DOWN: button = DOWN; break;
-			case KeyEvent.VK_LEFT: button = LEFT; break;
-			case KeyEvent.VK_RIGHT: button = RIGHT; break;
+			case KeyEvent.VK_W: button = MOVE_UP; break;
+			case KeyEvent.VK_S: button = MOVE_DOWN; break;
+			case KeyEvent.VK_A: button = MOVE_LEFT; break;
+			case KeyEvent.VK_D: button = MOVE_RIGHT; break;
+			case KeyEvent.VK_UP: button = ACTION_UP; break;
+			case KeyEvent.VK_DOWN: button = ACTION_DOWN; break;
+			case KeyEvent.VK_LEFT: button = ACTION_LEFT; break;
+			case KeyEvent.VK_RIGHT: button = ACTION_RIGHT; break;
 			case KeyEvent.VK_Q: button = LEFT_SHOULDER; break;
 			case KeyEvent.VK_E: button = RIGHT_SHOULDER; break;
 		}

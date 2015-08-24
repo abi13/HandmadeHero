@@ -9,3 +9,10 @@ How to do this in Windows:
 code for controller:
   XInput returns value of sticks in the range [-32768..32767]
   in the game we normalize it to be in the range [-1..1]  
+  dead-zone processing: XInput defines XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE
+     and XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE, which happen to be 20% + of the stick value!!!
+    stick values that fall into a dead zone are to be ignored and their value must be set to 0
+    GameControllerInput.stickAverageX and .stickAverageY are set by reading from controller
+      state and adjusting by taking into account the dead zone
+    then if stickAverageX or stickAverageY is greater than a threshold (say 0.5f)
+      then convert it into one of move events: left, right, up, down

@@ -91,4 +91,11 @@ Day 016: VisualStudio compiler switches
   - keyboard mappings implemented: 
     up,down,left,right keys are mapped as up,down,left,right gamepad events
     Q - left shoulder, E - right shoulder
+
+Day 017: unified keyboard and gamepad input
+  https://forums.handmadehero.org/jace/videos/win32-platform/day017.html
+
+Day 018: enforcing a video frame rate
+  https://forums.handmadehero.org/jace/videos/win32-platform/day018.html
+  - enforced a video frame rate of 30fps
     
