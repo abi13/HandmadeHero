@@ -1,38 +1,33 @@
 This project is based on a handmadehero.org project.
+The videos are available on per-day basis, f.e. video from day 1 has url
+   https://forums.handmadehero.org/jace/videos/win32-platform/day001.html
 
 Day 001: display a message box
-  https://forums.handmadehero.org/jace/videos/win32-platform/day001.html
 
 Day 002: opening a window
-  https://forums.handmadehero.org/jace/videos/win32-platform/day002.html
   - window content is alternating between white and black, when sizing it
   
 Day 003: allocating a back buffer
-  https://forums.handmadehero.org/jace/videos/win32-platform/day003.html
   - close the app when close button is clicked
   - handle event: window size changed
   - create bitmap from scratch: 32-bit per pixel: RGB + alpha
 
 Day 004: animating the back buffer
-  https://forums.handmadehero.org/jace/videos/win32-platform/day004.html
   - fill the entire back buffer with blue color
   - fill the entire back buffer with a weird gradient 256x256 pixels
     window resizing animates the weird gradient 
     
 Day 005: Windows graphics review
-  https://forums.handmadehero.org/jace/videos/win32-platform/day005.html
   - code refactoring: encapsulate back buffer related code
   - create fixed size back buffer 1280x760 pixels
   
 Day 006: gamepad and keyboard input
-  https://forums.handmadehero.org/jace/videos/win32-platform/day006.html
    (Win: discussed XInput API)
    (Win: discussed unresolved external symbols and dynamic dll loading
          by using LoadLibrary() and GetProcAddress())
   - setup key binding and handler for the 'Esc' key
   
 Day 007: initializing DirectSound
-  https://forums.handmadehero.org/jace/videos/win32-platform/day007.html
   (Win: discussed DirectSound API, primary and secondary buffers)
   - nowadays audio is 48kHz, we'll use 2 sec audio buffer, 2 channels, 16 bit per sample
     note: in a buffer you have 16 bit for LEFT channel, and 16-bit for RIGHT channel,
@@ -40,12 +35,10 @@ Day 007: initializing DirectSound
   - game loop implemented to do continuous rendering of weird gradient 
 
 Day 008: writing a square wave sound
-  https://forums.handmadehero.org/jace/videos/win32-platform/day008.html
   (Win: discussed how to write a square wave to DirectSound)
   - generating square wave audio of given frequency (medium C tone) 
 
 Day 009: variable pitch sine wave sound
-  https://forums.handmadehero.org/jace/videos/win32-platform/day009.html
   - square waves are harsh, so sine waves will be used instead to generate smoother sound
   - fixed point and floating point arithmetic explained
   - floating point arithmetic will be simulated by integer arithmetic
@@ -57,45 +50,43 @@ Day 009: variable pitch sine wave sound
       to notice changes in tone frequency
 
 Day 010: performance counters
-  https://forums.handmadehero.org/jace/videos/win32-platform/day010.html
   - (Win: discussed QueryPerformanceCounter, RDTSC, wsprintf, sprintf)
   - implemented frame timing, to determine fps (it was 400+ fps on 8 core intel core i7)
    
 Day 011: basics of platform design
-  https://forums.handmadehero.org/jace/videos/win32-platform/day011.html
   - (Win: platform-specific code and cross-platform code are kept in separate files)
   
 Day 012: platform-independent sound output
-  https://forums.handmadehero.org/jace/videos/win32-platform/day012.html
   - (Win: discuss memory allocations on stack (alloca))
   - (Win: allocate a big sound buffer at the beginning and fill up regions of this buffer
           as needed, to be written later to DirectSound buffers)
   - GameSound class is already using big Java-allocated sound buffer to be used by the game
 
 Day 013: platform-independent user input
-  https://forums.handmadehero.org/jace/videos/win32-platform/day013.html
   - (C++: discussed function overloading)
   - implemented keyboard listener handling UP, DOWN, LEFT and RIGHT keys
 
 Day 014: platform-independent game memory
-  https://forums.handmadehero.org/jace/videos/win32-platform/day014.html
   - (Win: preallocating two memory pools: permanent storage and transient storage)
   
 Day 015: platform-independent debug file I/O
-  https://forums.handmadehero.org/jace/videos/win32-platform/day015.html
   - created GameAssets class that allows to read a file into memory, and write a file to disk
 
 Day 016: VisualStudio compiler switches
-  https://forums.handmadehero.org/jace/videos/win32-platform/day016.html
   - (Win: discussed C/C++ compiler warnings, compiling 32-bit executable, name mangling)
   - keyboard mappings implemented: 
     up,down,left,right keys are mapped as up,down,left,right gamepad events
     Q - left shoulder, E - right shoulder
 
 Day 017: unified keyboard and gamepad input
-  https://forums.handmadehero.org/jace/videos/win32-platform/day017.html
 
 Day 018: enforcing a video frame rate
-  https://forums.handmadehero.org/jace/videos/win32-platform/day018.html
   - enforced a video frame rate of 30fps
-    
+
+Day 019: improving audio sync
+
+Day 020: debugging the audio sync
+  - implemented audio sync for low and high latency sound cards
+  
+
+  

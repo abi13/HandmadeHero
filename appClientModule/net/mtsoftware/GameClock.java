@@ -37,14 +37,16 @@ public class GameClock {
 		counter3 = System.nanoTime();
 	}
 
-	void newFrame() throws InterruptedException {
+	void sleepUntilFrameEnd() throws InterruptedException {
 		// compute nr of ns to sleep until the end of the current frame
 		long nsToSleep = NANOSECONDS_ELAPSED_PER_FRAME - counter3 + lastCounter;
 		if( nsToSleep>0 ) {
 			System.out.println("sleep "+nsToSleep/1000000+"ms");
 			Thread.sleep(nsToSleep/1000000, (int)(nsToSleep%1000000));
 		}
+	}
 
+	void newFrame() throws InterruptedException {
 		lastCounter = counter3;
 	}
 	
@@ -53,11 +55,12 @@ public class GameClock {
 	}
 	
 	void printPerformanceVariables() {
-		long elapsedFrameTime = counter3 - lastCounter;
+		long counter4 = System.nanoTime();
+		long elapsedFrameTime = counter4 - lastCounter;
 		System.out.println("fps "+1000000000l/elapsedFrameTime+
 				" logic "+(100*(counter1-lastCounter)/elapsedFrameTime)+"%"+
 				" graph "+(100*(counter2-counter1)/elapsedFrameTime)+"%"+
-				" sound "+(100*(counter3-counter2)/elapsedFrameTime)+"%");
-				
+				" sound "+(100*(counter3-counter2)/elapsedFrameTime)+"%"+
+				" sleep "+(100*(counter4-counter3)/elapsedFrameTime)+"%");
 	}
 }

@@ -18,7 +18,7 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException {
 		
 		// create the main frame window
-		frame = new JFrame("Handmade Hero Day 018");
+		frame = new JFrame("Handmade Hero Day 020");
 		
 		// exit the application when Close button is clicked
 		// Note: the default is JFrame.HIDE_ON_CLOSE — Hide the frame, but keep 
@@ -86,7 +86,9 @@ public class Main {
 			input.finishFrame();
 			clock.updateSoundCounter();
 
+			clock.sleepUntilFrameEnd();
 			clock.printPerformanceVariables();
+			pane.flip();
 			clock.newFrame();
 		}
 	}
@@ -111,7 +113,7 @@ public class Main {
     	
     	public void paintComponent(Graphics g) {
     		// display offscreen buffer in window
-    		backBuffer.renderWeirdGradient(this, g, getWidth(), getHeight(), xOffset, yOffset);
+    		backBuffer.renderWeirdGradient(g);
 	    }
     	
     	public void incrementXOffset(int delta) {
@@ -127,6 +129,10 @@ public class Main {
     	}
 
     	public void animate() {
+    		backBuffer.prepareWeirdGradient(this, getWidth(), getHeight(), xOffset, yOffset);
+    	}
+
+    	public void flip() {
     		paintComponent(getGraphics());
     	}
 	}
@@ -138,7 +144,8 @@ public class Main {
     	final int height = 760;
     	int bytesPerPixel = 4;
     	int pitch = width;
-
+    	Image image;
+    	
     	public BackBuffer() {
     		createWeirdGradient();
     	}
@@ -162,13 +169,16 @@ public class Main {
     		}
     	}
 
-    	public void renderWeirdGradient(JComponent component, Graphics g, 
+    	public void prepareWeirdGradient(JComponent component,  
     			int width, int height, int xOffset, int yOffset) {
     		
     		animateWeirdGradient(xOffset, yOffset);
     		MemoryImageSource bitmap = new MemoryImageSource(width, height, bitmapMemory, 0, pitch);
-    		Image image = component.createImage(bitmap);
-    		g.drawImage(image,  0, 0, null);
+    		image = component.createImage(bitmap);
+    	}
+
+    	public void renderWeirdGradient(Graphics g) {
+    		g.drawImage(image, 0, 0, null);
     	}
     }
 }
