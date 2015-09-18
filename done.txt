@@ -88,5 +88,25 @@ Day 019: improving audio sync
 Day 020: debugging the audio sync
   - implemented audio sync for low and high latency sound cards
   
+Day 021: loading game code dynamically
+  (Win: moved platform-independent code into dynamically loaded DLL handmade.dll)
+  trick: every 120 frames handmade.exe is unloading handmade_temp.dll, 
+    copying handmade.dll to handmade_temp.dll, and then loading dynamically handmade_temp.dll;
+    thanks to that while the game is running we can make changes to game code, compile it,
+    and see the changes in the game right away! cool!
 
+Day 023: instantaneous live code editing
   
+Day 024: looped live code editing
+	- displaying a small white rectangle as a player that could be moved by pressing movement keys
+	- pressing action up key makes the player jump
+	- implementing input recorder (not finished)
+	
+	24:43
+	
+	
+
+
+    
+  
+   

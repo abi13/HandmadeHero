@@ -108,6 +108,7 @@ public class GameInput implements KeyListener {
 			case KeyEvent.VK_RIGHT: button = ACTION_RIGHT; break;
 			case KeyEvent.VK_Q: button = LEFT_SHOULDER; break;
 			case KeyEvent.VK_E: button = RIGHT_SHOULDER; break;
+			case KeyEvent.VK_L: toggleInputRecording(); break;
 		}
 
 		GameButtonState newState = controllers[KEYBOARD].button[button];
@@ -134,6 +135,7 @@ public class GameInput implements KeyListener {
 			case KeyEvent.VK_RIGHT: button = ACTION_RIGHT; break;
 			case KeyEvent.VK_Q: button = LEFT_SHOULDER; break;
 			case KeyEvent.VK_E: button = RIGHT_SHOULDER; break;
+			case KeyEvent.VK_L: toggleInputRecording(); break;
 		}
 
 		GameButtonState newState = controllers[KEYBOARD].button[button];
@@ -148,5 +150,48 @@ public class GameInput implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// we won't use it
+	}
+	
+	public void onControllerEvent(GameState gameState) {
+		int Controller_StickAverageX = 0; // placeholder
+		int Controller_StickAverageY = 0; // placeholder
+		gameState.updatePlayerX((int)(4.0f*Controller_StickAverageX));
+		gameState.updatePlayerX((int)(4.0f*Controller_StickAverageY));
+	}
+
+
+	// input recording and playback
+	private boolean inputRecording = false;
+	private boolean inputPlaying = false;
+	
+	
+	
+	public boolean isInputRecording() {
+		return inputRecording;
+	}
+	
+	public void toggleInputRecording() {
+		inputRecording = !inputRecording;
+		
+		// if stopped recording, then autoplay the recording
+		if( !inputRecording ) {
+			inputPlaying = true;
+		}
+	}
+	
+	public boolean isInputPlaying() {
+		return inputPlaying;
+	}
+	
+	public void toggleInputPlaying() {
+		inputPlaying = !inputPlaying;
+	}
+
+	public void recordInput() {
+		
+	}
+	
+	public void playBackInput() {
+		
 	}
 }

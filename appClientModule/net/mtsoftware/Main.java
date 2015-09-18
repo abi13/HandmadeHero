@@ -18,7 +18,7 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException {
 		
 		// create the main frame window
-		frame = new JFrame("Handmade Hero Day 020");
+		frame = new JFrame("Handmade Hero Day 023");
 		
 		// exit the application when Close button is clicked
 		// Note: the default is JFrame.HIDE_ON_CLOSE — Hide the frame, but keep 
@@ -54,6 +54,8 @@ public class Main {
 
 	static void runGameLoop() throws InterruptedException {
 		
+		GameState gameState = new GameState();
+		
 		GameClock clock = new GameClock();
 		clock.start();
 		
@@ -61,6 +63,7 @@ public class Main {
 			clock.updateGameLogicCounter();
 			if( input.isKeyDown(GameInput.ACTION_UP) ) {
 				pane.incrementYOffset(+1);
+				gameState.updatePlayerY(-10); // jump
 			}
 			if( input.isKeyDown(GameInput.ACTION_DOWN) ) {
 				pane.incrementYOffset(-1);
@@ -77,8 +80,22 @@ public class Main {
 			if( input.isKeyDown(GameInput.RIGHT_SHOULDER) ) {
 				sound.decreaseTone();
 			}
+
+			// handle player movement from keyboard
+			if( input.isKeyDown(GameInput.MOVE_UP) ) {
+				gameState.updatePlayerY(-1);
+			}
+			if( input.isKeyDown(GameInput.MOVE_DOWN) ) {
+				gameState.updatePlayerY(+1);
+			}
+			if( input.isKeyDown(GameInput.MOVE_LEFT) ) {
+				gameState.updatePlayerX(-1);
+			}
+			if( input.isKeyDown(GameInput.MOVE_RIGHT) ) {
+				gameState.updatePlayerX(+1);
+			}
 			
-			pane.animate();
+			pane.animate(gameState);
 			clock.updateGraphicsCounter();
 
 			sound.play();
@@ -128,8 +145,8 @@ public class Main {
     			yOffset += 256;
     	}
 
-    	public void animate() {
-    		backBuffer.prepareWeirdGradient(this, getWidth(), getHeight(), xOffset, yOffset);
+    	public void animate(GameState gameState) {
+    		backBuffer.prepareWeirdGradient(this, gameState, getWidth(), getHeight(), xOffset, yOffset);
     	}
 
     	public void flip() {
@@ -156,7 +173,7 @@ public class Main {
     		bitmapMemory = new int[width*height];
     	}
     	
-    	public void animateWeirdGradient(int xOffset, int yOffset) {
+    	void animateWeirdGradient(int xOffset, int yOffset) {
     		
     		// we store one pixel per 32-bits, and integer is 32-bit wide
     		int pos = 0;
@@ -169,10 +186,26 @@ public class Main {
     		}
     	}
 
-    	public void prepareWeirdGradient(JComponent component,  
+    	void renderPlayer(GameState gameState) {
+    		
+    		for( int y=gameState.getPlayerY()-5; y<gameState.getPlayerY()+5; y++ ) {
+    			// ensure to draw within window boundaries
+    			if( y<0 || y>=height )
+    				continue;
+    			int pos = y*width;
+    			for( int x = gameState.getPlayerX()-5; x<gameState.getPlayerX()+5; x++ ) {
+    				if( x>=0 && x<width ) {
+    					bitmapMemory[pos+x] = Color.WHITE.getRGB();
+    				}
+    			}
+    		}
+    	}
+    	
+    	public void prepareWeirdGradient(JComponent component, GameState gameState, 
     			int width, int height, int xOffset, int yOffset) {
     		
     		animateWeirdGradient(xOffset, yOffset);
+    		renderPlayer(gameState);
     		MemoryImageSource bitmap = new MemoryImageSource(width, height, bitmapMemory, 0, pitch);
     		image = component.createImage(bitmap);
     	}

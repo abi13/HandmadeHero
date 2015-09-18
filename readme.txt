@@ -8,3 +8,4 @@ arrow left:  mapped to gamepad left button (move image left)
 arrow right: mapped to gamepad right button (move image right)
 key Q:       mapped to gamepad left shoulder (increase tone frequency)
 key E:       mapped to gamepad right shoulder (decrease tone frequency)
+key L:		 toggles input recording
